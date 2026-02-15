@@ -1,17 +1,23 @@
 const { password } = require("pg/lib/defaults");
 const sequelize = require("../config/db");
-const { DataTypes } = require("sequelize");
+const { DataTypes, UUIDV4 } = require("sequelize");
+const bcrypt = require("bcrypt");
 
 const phoneValidateRegex = /^0\d{9}$/;
 const User = sequelize.define(
   "User",
   {
-    userId: { type: DataTypes.UUID, autoIncrement: true, primaryKey: true },
+    userId: {
+      type: DataTypes.UUID,
+      defaultValue: UUIDV4,
+      primaryKey: true,
+      allowNull: false,
+    },
     firstName: { type: DataTypes.STRING, allowNull: false },
     lastName: { type: DataTypes.STRING, allowNull: false },
     otherNames: { type: DataTypes.STRING, allowNull: true },
     email: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       unique: true,
       allowNull: false,
       validate: { isEmail: true },
@@ -39,6 +45,10 @@ const User = sequelize.define(
       validate: {
         notEmpty: true,
       },
+    },
+    ghanaCardImgUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     role: {
       type: DataTypes.STRING,

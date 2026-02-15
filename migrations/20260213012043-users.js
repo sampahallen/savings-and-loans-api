@@ -35,6 +35,10 @@ module.exports = {
                       notEmpty: true,
                   }
               },
+              ghanaCardImgUrl: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull:true,
+              },
               role: {
                   type: Sequelize.DataTypes.STRING,
                   allowNull: false,

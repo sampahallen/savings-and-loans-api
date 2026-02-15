@@ -1,0 +1,10 @@
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "otherNames": "Smith",
+    "email": "user123@test.com",
+    "phoneNumber": "0123456789",
+    "password": "pass1234",
+    "dateOfBirth": "2004-01-01",
+    "ghanaCardNo": "GHA-00000000-0"
+}
