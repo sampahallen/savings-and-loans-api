@@ -1,21 +1,34 @@
-const { password } = require("pg/lib/defaults");
 const sequelize = require("../config/db");
-const { DataTypes, UUIDV4 } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 const phoneValidateRegex = /^0\d{9}$/;
+
 const User = sequelize.define(
   "User",
   {
     userId: {
       type: DataTypes.UUID,
-      defaultValue: UUIDV4,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
+      field: "user_id",
     },
-    firstName: { type: DataTypes.STRING, allowNull: false },
-    lastName: { type: DataTypes.STRING, allowNull: false },
-    otherNames: { type: DataTypes.STRING, allowNull: true },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "first_name",
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "last_name",
+    },
+    otherNames: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "other_names",
+    },
     email: {
       type: DataTypes.STRING,
       unique: true,
@@ -26,6 +39,7 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
+      field: "phone_number",
       validate: function (v) {
         return phoneValidateRegex.test(v);
       },
@@ -37,11 +51,13 @@ const User = sequelize.define(
     dateOfBirth: {
       type: DataTypes.DATEONLY,
       allowNull: false,
+      field: "date_of_birth",
     },
     ghanaCardNo: {
       type: DataTypes.STRING(20),
       allowNull: false,
       unique: true,
+      field: "ghana_card_no",
       validate: {
         notEmpty: true,
       },
@@ -49,6 +65,7 @@ const User = sequelize.define(
     ghanaCardImgUrl: {
       type: DataTypes.STRING,
       allowNull: true,
+      field: "ghana_card_img_url",
     },
     role: {
       type: DataTypes.STRING,
@@ -59,21 +76,25 @@ const User = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+      field: "is_active",
     },
     kycStatus: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: "Reviewing",
+      field: "kyc_status",
     },
     lastLogin: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null,
+      field: "last_login",
     },
   },
   {
     tableName: "users",
     timestamps: true,
+    underscored: true,
     hooks: {
       beforeCreate: async (user) => {
         user.password = await bcrypt.hash(user.password, 13);
@@ -84,9 +105,11 @@ const User = sequelize.define(
         }
       },
     },
-  },
+  }
 );
+
 User.prototype.validatePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
 module.exports = User;
