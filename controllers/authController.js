@@ -72,6 +72,11 @@ exports.register = async (req, res, next) => {
       });
     }
 
+    let ghanaCardImgUrl = null;
+    if (req.file) {
+      ghanaCardImgUrl = `/uploads/ghana_cards/${req.file.filename}`;
+    }
+
     // Create user
     const user = await User.create({
       firstName,
@@ -82,6 +87,7 @@ exports.register = async (req, res, next) => {
       password,
       dateOfBirth,
       ghanaCardNo,
+      ghanaCardImgUrl,
     });
 
     res.status(201).json({
@@ -93,6 +99,7 @@ exports.register = async (req, res, next) => {
         phoneNumber: user.phoneNumber,
         dateOfBirth: user.dateOfBirth,
         ghanaCardNo: user.ghanaCardNo,
+        ghanaCardImgUrl: user.ghanaCardImgUrl,
         role: user.role,
         isActive: user.isActive,
         kycStatus: user.kycStatus,
