@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const sequelize = require("./config/db");
 const errorHandler = require("./middlewares/errorHandler");
@@ -8,6 +9,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve uploaded Ghana card images statically
+app.use(
+  "/uploads/ghana_cards",
+  express.static(path.join(__dirname, "uploads", "ghana_cards"))
+);
 
 // Health check endpoint
 app.get("/health", (req, res) => {
