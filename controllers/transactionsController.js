@@ -3,9 +3,9 @@ const SavingsAccount = require("../models/savingsAccounts");
 const Loan = require("../models/loans");
 const { Op } = require("sequelize");
 
-/**
- * Get transaction history
- */
+
+// Get transaction history
+
 exports.getTransactions = async (req, res, next) => {
   try {
     const userId = req.user.userId;
@@ -141,9 +141,9 @@ exports.getTransactions = async (req, res, next) => {
   }
 };
 
-/**
- * Get a specific transaction by ID
- */
+
+// Get a specific transaction by ID
+
 exports.getTransaction = async (req, res, next) => {
   try {
     const { transactionId } = req.params;

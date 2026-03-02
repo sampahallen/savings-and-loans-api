@@ -2,9 +2,9 @@ const SavingsAccount = require("../models/savingsAccounts");
 const Transaction = require("../models/transactions");
 const { Op } = require("sequelize");
 
-/**
- * Generate unique account number
- */
+
+// Generate unique account number
+
 const generateAccountNumber = () => {
   const prefix = "SAV";
   const timestamp = Date.now().toString().slice(-8);
@@ -14,9 +14,8 @@ const generateAccountNumber = () => {
   return `${prefix}${timestamp}${random}`;
 };
 
-/**
- * Create a new savings account
- */
+// Create a new savings account
+
 exports.createAccount = async (req, res, next) => {
   try {
     const { accountType } = req.body;
@@ -73,9 +72,9 @@ exports.createAccount = async (req, res, next) => {
   }
 };
 
-/**
- * Get all savings accounts for the authenticated user
- */
+
+// Get all savings accounts for the authenticated user
+
 exports.getMyAccounts = async (req, res, next) => {
   try {
     const userId = req.user.userId;
@@ -102,9 +101,9 @@ exports.getMyAccounts = async (req, res, next) => {
   }
 };
 
-/**
- * Get a specific account by ID
- */
+
+// Get a specific account by ID
+
 exports.getAccount = async (req, res, next) => {
   try {
     const { accountId } = req.params;
@@ -140,9 +139,9 @@ exports.getAccount = async (req, res, next) => {
   }
 };
 
-/**
- * Deposit money into account
- */
+
+// Deposit money into account
+
 exports.deposit = async (req, res, next) => {
   const t = await SavingsAccount.sequelize.transaction();
 
@@ -221,9 +220,9 @@ exports.deposit = async (req, res, next) => {
   }
 };
 
-/**
- * Withdraw money from account
- */
+
+// Withdraw money from account
+
 exports.withdraw = async (req, res, next) => {
   const t = await SavingsAccount.sequelize.transaction();
 

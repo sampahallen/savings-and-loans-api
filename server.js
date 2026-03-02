@@ -37,13 +37,11 @@ app.use((req, res) => {
   });
 });
 
-// Error handling middleware (must be last)
+// Error handling middleware
 app.use(errorHandler);
 
-// Start server
 const PORT = process.env.PORT || 4000;
 
-// Test database connection
 sequelize
   .authenticate()
   .then(() => {

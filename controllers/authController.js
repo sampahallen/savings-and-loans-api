@@ -4,9 +4,9 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
-/**
- * Generate access token (short-lived: 15 minutes)
- */
+
+// Generate access token 
+
 const generateAccessToken = (user) => {
   return jwt.sign(
     {
@@ -21,16 +21,16 @@ const generateAccessToken = (user) => {
   );
 };
 
-/**
- * Generate refresh token (long-lived: 7 days)
- */
+
+// Generate refresh token 
+
 const generateRefreshToken = () => {
   return crypto.randomBytes(64).toString("hex");
 };
 
-/**
- * Register a new user
- */
+
+// Register a new user
+
 exports.register = async (req, res, next) => {
   try {
     const {
@@ -44,7 +44,7 @@ exports.register = async (req, res, next) => {
       ghanaCardNo,
     } = req.body;
 
-    // Basic validation
+    // validation
     if (
       !firstName ||
       !lastName ||
@@ -103,9 +103,9 @@ exports.register = async (req, res, next) => {
   }
 };
 
-/**
- * Login user and generate tokens
- */
+
+// Login user and generate tokens
+
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -150,7 +150,7 @@ exports.login = async (req, res, next) => {
     const accessToken = generateAccessToken(user);
     const refreshTokenValue = generateRefreshToken();
 
-    // Calculate expiry (7 days from now)
+    // Calculate expiry 
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7);
 
@@ -183,9 +183,9 @@ exports.login = async (req, res, next) => {
   }
 };
 
-/**
- * Refresh access token using refresh token
- */
+
+//  Refresh access token using refresh tokens
+
 exports.refresh = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
@@ -249,9 +249,8 @@ exports.refresh = async (req, res, next) => {
   }
 };
 
-/**
- * Logout user and revoke refresh token
- */
+// Logout user and revoke refresh token
+
 exports.logout = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
@@ -282,9 +281,9 @@ exports.logout = async (req, res, next) => {
   }
 };
 
-/**
- * Get current user profile
- */
+
+// Get current user profile
+
 exports.getProfile = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.userId, {

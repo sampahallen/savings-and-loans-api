@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 const RefreshToken = require("../models/refreshTokens");
 
-/**
- * Middleware to verify JWT access token
- */
+
+// Middleware to verify JWT access token
+
 const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;

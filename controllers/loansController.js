@@ -3,9 +3,9 @@ const Transaction = require("../models/transactions");
 const SavingsAccount = require("../models/savingsAccounts");
 const { Op } = require("sequelize");
 
-/**
- * Generate unique loan number
- */
+
+//Generate unique loan number
+
 const generateLoanNumber = () => {
   const prefix = "LOAN";
   const timestamp = Date.now().toString().slice(-8);
@@ -15,9 +15,9 @@ const generateLoanNumber = () => {
   return `${prefix}${timestamp}${random}`;
 };
 
-/**
- * Calculate loan details (total amount, monthly payment, etc.)
- */
+
+// Calculate loan details 
+
 const calculateLoanDetails = (principalAmount, interestRate, termMonths) => {
   const principal = parseFloat(principalAmount);
   const rate = parseFloat(interestRate) / 100 / 12; // Monthly interest rate
@@ -37,9 +37,9 @@ const calculateLoanDetails = (principalAmount, interestRate, termMonths) => {
   };
 };
 
-/**
- * Apply for a loan
- */
+
+// Apply for a loan
+
 exports.applyForLoan = async (req, res, next) => {
   try {
     const { principalAmount, interestRate, termMonths, purpose } = req.body;
@@ -117,9 +117,9 @@ exports.applyForLoan = async (req, res, next) => {
   }
 };
 
-/**
- * Get all loans for the authenticated user
- */
+
+// Get all loans for the authenticated user
+
 exports.getMyLoans = async (req, res, next) => {
   try {
     const borrowerId = req.user.userId;
@@ -158,9 +158,9 @@ exports.getMyLoans = async (req, res, next) => {
   }
 };
 
-/**
- * Get a specific loan by ID
- */
+
+// Get a specific loan by ID
+
 exports.getLoan = async (req, res, next) => {
   try {
     const { loanId } = req.params;
@@ -204,9 +204,9 @@ exports.getLoan = async (req, res, next) => {
   }
 };
 
-/**
- * Approve a loan (loan officer/admin only)
- */
+
+// Approve a loan (loan officer/admin only)
+
 exports.approveLoan = async (req, res, next) => {
   const t = await Loan.sequelize.transaction();
 
@@ -256,9 +256,9 @@ exports.approveLoan = async (req, res, next) => {
   }
 };
 
-/**
- * Disburse loan funds (loan officer/admin only)
- */
+
+// Disburse loan funds (loan officer/admin only)
+
 exports.disburseLoan = async (req, res, next) => {
   const t = await Loan.sequelize.transaction();
 
@@ -354,9 +354,9 @@ exports.disburseLoan = async (req, res, next) => {
   }
 };
 
-/**
- * Make loan repayment
- */
+
+// Make loan repayment
+
 exports.repayLoan = async (req, res, next) => {
   const t = await Loan.sequelize.transaction();
 
